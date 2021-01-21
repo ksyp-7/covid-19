@@ -3,10 +3,8 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
 import Card from 'react-bootstrap/Card';
-import CardDeck from 'react-bootstrap/CardDeck'
-import CardColumns from 'react-bootstrap/CardColumns';
-import Cloumns from 'react-columns';
-import Form from 'react-bootstrap/Form';
+import CardDeck from 'react-bootstrap/CardDeck';
+
 
 
 function App() {
