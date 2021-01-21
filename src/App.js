@@ -12,7 +12,6 @@ import Form from 'react-bootstrap/Form';
 function App() {
   const [latest, setLatest] = useState([]);
   const [res,setRes ]= useState([]);
-  const [serch,setSerch] = useState("");
 
   useEffect(() => {
     axios
@@ -35,11 +34,7 @@ function App() {
 
     
   }, [])
-
-  const FC = res.filter(item =>{
-    return serch !== "" ? item.country_name.includes(serch) : item
-  })
-  const contries = FC.map((data,i) => {
+  const contries = res.map((data,i) => {
     return(
       <Card
         key={i}
@@ -165,15 +160,7 @@ function App() {
         </Card>
         </CardDeck>
 
-      <Form>
-        <Form.Group controlId="formGroupSearch">
-          <Form.Control 
-            type="text" 
-            placeholder="Search a country" 
-            onChange={e => setSerch(e.target.value)}/>
-          </Form.Group>
-      </Form>
-        <Cloumns>{contries}</Cloumns>
+    
 
 
   
