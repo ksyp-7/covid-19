@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
 import Card from 'react-bootstrap/Card';
 import CardDeck from 'react-bootstrap/CardDeck';
+import GoogleMapReact from 'google-map-react';
 
 
 
@@ -13,7 +14,7 @@ function App() {
 
   useEffect(() => {
     axios
-    .get("https://corona-virus-world-and-india-data.p.rapidapi.com/api", {
+    .get("https://corona.lmao.ninja/v2/all", {
       "method": "GET",
       "headers": {
         "x-rapidapi-key": "e5e2f726e4msha90e808df4f0c85p12b883jsn0099c0cb1a3c",
@@ -23,7 +24,7 @@ function App() {
     .then(response => {
       setLatest(response.data.world_total);
       setRes(response.data.countries_stat);
-      console.log(response.data.countries_stat);
+      console.log(response.data);
       console.log(response.data.world_total);
     })
     .catch(err => {
@@ -32,28 +33,6 @@ function App() {
 
     
   }, [])
-  const contries = res.map((data,i) => {
-    return(
-      <Card
-        key={i}
-        bg="info"
-        text="dark"
-        className="text-center"
-        style={{margin: "10px"}}
-        >
-          
-          <Card.Body>
-            <Card.Title>{data.country_name}</Card.Title>
-            <Card.Text>Total Cases {data.cases}</Card.Text>
-            <Card.Text>Active Cases {data.active_cases}</Card.Text>
-            <Card.Text>Deaths {data.deaths}</Card.Text>
-            <Card.Text>Deaths per 1m population {data.deaths_per_1m_population}</Card.Text>
-            <Card.Text>Total Recovered {data.total_recovered}</Card.Text>
-            <Card.Text>Total tests {data.total_tests}</Card.Text>
-          </Card.Body>
-        </Card>
-    );
-  } );
 
 
   return (
@@ -68,11 +47,11 @@ function App() {
           <Card.Body>
             <Card.Title>Total Cases</Card.Title>
             <Card.Text>
-              {latest.total_cases}
+              {latest}
       </Card.Text>
           </Card.Body>
           <Card.Footer>
-            <small>Last updated on {latest.statistic_taken_at}</small>
+            <small>Last updated on {latest}</small>
           </Card.Footer>
         </Card>
         <Card 
@@ -83,11 +62,11 @@ function App() {
           <Card.Body>
             <Card.Title>Total Deaths</Card.Title>
             <Card.Text>
-            {latest.total_deaths}
+            {latest}
             </Card.Text>
           </Card.Body>
           <Card.Footer>
-            <small>Last updated on {latest.statistic_taken_at}</small>
+            <small>Last updated on {latest}</small>
           </Card.Footer>
         </Card>
         <Card 
@@ -99,11 +78,11 @@ function App() {
           <Card.Body>
             <Card.Title>Total Recoverd</Card.Title>
             <Card.Text>
-            {latest.total_recovered}
+            {latest}
       </Card.Text>
           </Card.Body>
           <Card.Footer>
-            <small>Last updated on {latest.statistic_taken_at}</small>
+            <small>Last updated on {latest}</small>
           </Card.Footer>
         </Card>
       </CardDeck>
@@ -117,11 +96,11 @@ function App() {
           <Card.Body>
             <Card.Title>Total Active Cases</Card.Title>
             <Card.Text>
-            {latest.active_cases}
+            {latest}
       </Card.Text>
           </Card.Body>
           <Card.Footer>
-            <small>Last updated on {latest.statistic_taken_at}</small>
+            <small>Last updated on {latest}</small>
           </Card.Footer>
         </Card>
         <Card 
@@ -133,11 +112,11 @@ function App() {
           <Card.Body>
             <Card.Title>New Deaths</Card.Title>
             <Card.Text>
-            {latest.new_deaths}
+            {latest}
       </Card.Text>
           </Card.Body>
           <Card.Footer>
-            <small>Last updated on {latest.statistic_taken_at}</small>
+            <small>Last updated on {latest}</small>
           </Card.Footer>
         </Card>
         <Card 
@@ -149,16 +128,28 @@ function App() {
           <Card.Body>
             <Card.Title>New cases</Card.Title>
             <Card.Text>
-            {latest.new_cases}
+            {latest}
       </Card.Text>
           </Card.Body>
           <Card.Footer>
-            <small>Last updated on {latest.statistic_taken_at}</small>
+            <small>Last updated on {latest}</small>
           </Card.Footer>
         </Card>
         </CardDeck>
 
-    
+        <div style={{ height: '100vh', width: '100%' }}>
+        <GoogleMapReact
+          bootstrapURLKeys={{ key:"AIzaSyBixYvYwCIkF5NWAtUl_zaGTeErRhtvXPw"}}
+          defaultCenter={{lat: 59.955413, lng:30.337844}}
+          defaultZoom={10}
+        >
+          <div
+            lat={59.955413}
+            lng={30.337844}>
+              My Marker
+              </div>
+        </GoogleMapReact>
+      </div>
 
 
   
