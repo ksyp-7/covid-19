@@ -14,25 +14,19 @@ function App() {
 
   useEffect(() => {
     axios
-    .get("https://corona.lmao.ninja/v2/all", {
-      "method": "GET",
-      "headers": {
-        "x-rapidapi-key": "e5e2f726e4msha90e808df4f0c85p12b883jsn0099c0cb1a3c",
-        "x-rapidapi-host": "corona-virus-world-and-india-data.p.rapidapi.com"
-      }
-    })
+    .get("https://corona.lmao.ninja/v2/all")
     .then(response => {
-      setLatest(response.data.world_total);
-      setRes(response.data.countries_stat);
       console.log(response.data);
-      console.log(response.data.world_total);
+      setLatest(response.data);
     })
     .catch(err => {
-      console.error(err);
     });
 
     
   }, [])
+
+  const date = new Date(parseInt(latest.updated));
+  const DateUpdated = date.toString();
 
 
   return (
@@ -47,11 +41,11 @@ function App() {
           <Card.Body>
             <Card.Title>Total Cases</Card.Title>
             <Card.Text>
-              {latest}
+              {latest.cases}
       </Card.Text>
           </Card.Body>
           <Card.Footer>
-            <small>Last updated on {latest}</small>
+            <small>Last updated on {DateUpdated}</small>
           </Card.Footer>
         </Card>
         <Card 
@@ -62,11 +56,11 @@ function App() {
           <Card.Body>
             <Card.Title>Total Deaths</Card.Title>
             <Card.Text>
-            {latest}
+            {latest.deaths}
             </Card.Text>
           </Card.Body>
           <Card.Footer>
-            <small>Last updated on {latest}</small>
+            <small>Last updated on {DateUpdated}</small>
           </Card.Footer>
         </Card>
         <Card 
@@ -78,11 +72,11 @@ function App() {
           <Card.Body>
             <Card.Title>Total Recoverd</Card.Title>
             <Card.Text>
-            {latest}
+            {latest.recovered}
       </Card.Text>
           </Card.Body>
           <Card.Footer>
-            <small>Last updated on {latest}</small>
+            <small>Last updated on {DateUpdated}</small>
           </Card.Footer>
         </Card>
       </CardDeck>
@@ -96,11 +90,11 @@ function App() {
           <Card.Body>
             <Card.Title>Total Active Cases</Card.Title>
             <Card.Text>
-            {latest}
+            {latest.active}
       </Card.Text>
           </Card.Body>
           <Card.Footer>
-            <small>Last updated on {latest}</small>
+            <small>Last updated on {DateUpdated}</small>
           </Card.Footer>
         </Card>
         <Card 
@@ -112,11 +106,11 @@ function App() {
           <Card.Body>
             <Card.Title>New Deaths</Card.Title>
             <Card.Text>
-            {latest}
+            {latest.todayDeaths}
       </Card.Text>
           </Card.Body>
           <Card.Footer>
-            <small>Last updated on {latest}</small>
+            <small>Last updated on {DateUpdated}</small>
           </Card.Footer>
         </Card>
         <Card 
@@ -128,11 +122,11 @@ function App() {
           <Card.Body>
             <Card.Title>New cases</Card.Title>
             <Card.Text>
-            {latest}
+            {latest.todayCases}
       </Card.Text>
           </Card.Body>
           <Card.Footer>
-            <small>Last updated on {latest}</small>
+            <small>Last updated on {DateUpdated}</small>
           </Card.Footer>
         </Card>
         </CardDeck>
