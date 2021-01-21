@@ -1,14 +1,19 @@
-import React, { useEffect,useState } from 'react';
+import { useEffect,useState } from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
 import Card from 'react-bootstrap/Card';
 import CardDeck from 'react-bootstrap/CardDeck'
+import CardColumns from 'react-bootstrap/CardColumns';
+import Cloumns from 'react-columns';
+import Form from 'react-bootstrap/Form';
 
 
 function App() {
-  const [latest, setLatest] = useState("");
-  const [ res,setRes ]= useState("");
-  
+  const [latest, setLatest] = useState([]);
+  const [res,setRes ]= useState([]);
+  const [serch,setSerch] = useState("");
+
   useEffect(() => {
     axios
     .get("https://corona-virus-world-and-india-data.p.rapidapi.com/api", {
@@ -30,6 +35,34 @@ function App() {
 
     
   }, [])
+
+  const FC = res.filter(item =>{
+    return serch !== "" ? item.country_name.includes(serch) : item
+  })
+  const contries = FC.map((data,i) => {
+    return(
+      <Card
+        key={i}
+        bg="info"
+        text="dark"
+        className="text-center"
+        style={{margin: "10px"}}
+        >
+          
+          <Card.Body>
+            <Card.Title>{data.country_name}</Card.Title>
+            <Card.Text>Total Cases {data.cases}</Card.Text>
+            <Card.Text>Active Cases {data.active_cases}</Card.Text>
+            <Card.Text>Deaths {data.deaths}</Card.Text>
+            <Card.Text>Deaths per 1m population {data.deaths_per_1m_population}</Card.Text>
+            <Card.Text>Total Recovered {data.total_recovered}</Card.Text>
+            <Card.Text>Total tests {data.total_tests}</Card.Text>
+          </Card.Body>
+        </Card>
+    );
+  } );
+
+
   return (
     <div>
 
@@ -132,6 +165,18 @@ function App() {
         </Card>
         </CardDeck>
 
+      <Form>
+        <Form.Group controlId="formGroupSearch">
+          <Form.Control 
+            type="text" 
+            placeholder="Search a country" 
+            onChange={e => setSerch(e.target.value)}/>
+          </Form.Group>
+      </Form>
+        <Cloumns>{contries}</Cloumns>
+
+
+  
     </div>
   );
 }
