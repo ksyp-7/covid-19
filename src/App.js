@@ -5,6 +5,8 @@ import axios from "axios";
 import Card from 'react-bootstrap/Card';
 import CardDeck from 'react-bootstrap/CardDeck';
 import GoogleMapReact from 'google-map-react';
+import CardColumn from 'react-bootstrap/CardColumns';
+import Columns from 'react-columns';
 
 
 
@@ -36,6 +38,7 @@ function App() {
   const countryLocation = res.map((data,i) => {
     return(
       <div
+        key={i}
         lat={data.countryInfo.lat}
         lng={data.countryInfo.long}
         style={{
@@ -53,6 +56,43 @@ function App() {
     )
   })
 
+const cardrender = res.map((data,i) => {
+  return(
+    <Card
+      key={i}
+      bg="light"
+      text="dark"
+      className="text-center"
+      style={{margin: "10px"}}>
+    <Card.Img src={data.countryInfo.flag}/>
+
+    <Card.Body>
+      <Card.Title>{data.country}</Card.Title>
+      <Card.Text>
+      Total Cases ==>{data.cases}
+      <br />
+      Total Deaths ==>{data.deaths}
+      <br />
+      Active Cases ==>{data.active}
+      <br />
+      Recovered ==>{data.recovered}
+      <br />
+      New Cases ==>{data.todayCases}
+      <br />
+      New Daths ==>{data.todayDeaths}
+      </Card.Text>
+    </Card.Body>
+  </Card>
+  )
+})
+
+var queries = [{
+  columns: 2,
+  query: 'min-width: 500px'
+}, {
+  columns: 3,
+  query: 'min-width: 1000px'
+}];
 
   return (
     <div>
@@ -164,6 +204,12 @@ function App() {
         >
         {countryLocation}
         </GoogleMapReact>
+
+       <Columns queries={queries}>
+       {cardrender}
+       </Columns>
+       
+
       </div>
 
 
